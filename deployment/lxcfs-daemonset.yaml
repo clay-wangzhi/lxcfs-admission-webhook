@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: lxcfs
+  namespace: kube-system
   labels:
     app: lxcfs
 spec:
@@ -15,11 +16,10 @@ spec:
     spec:
       hostPID: true
       tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
+      - operator: "Exists"
       containers:
       - name: lxcfs
-        image: registry.cn-hangzhou.aliyuncs.com/denverdino/lxcfs:3.1.2
+        image: wangzhichidocker/lxcfs:5.0.0
         imagePullPolicy: Always
         securityContext:
           privileged: true
